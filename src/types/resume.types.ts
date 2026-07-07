@@ -23,14 +23,15 @@ export interface IProjects{
     desciption : string;
     githubUrl : string;
     liveUrl : string;
-    techStack : string[]
+    techStack : string[];
+
 }
 
 export interface IEducation{
     institute : string;
     degree : string;
     startDate : string;
-    endDate : string
+    endDate : string;
 }
 
 export interface IResume{
@@ -41,6 +42,9 @@ export interface IResume{
     personalInfo : IPersonalInfo;
     workExperience? : IWorkExperience[];
     projects : IProjects[];
+    skills : string[];
     education:IEducation[];
     certifications?:string[];
+    createdAt? : Date;
+    updatedAt?: Date;
 }
