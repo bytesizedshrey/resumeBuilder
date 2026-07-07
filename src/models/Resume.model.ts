@@ -1,7 +1,7 @@
 import { IResume } from "@/types/resume.types";
 import mongoose from "mongoose";
 
-let resumeSchema = new mongoose.Schema<IResume>({
+const resumeSchema = new mongoose.Schema<IResume>({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -10,6 +10,17 @@ let resumeSchema = new mongoose.Schema<IResume>({
   title: {
     type: String,
     default: "",
+  },
+  education:{
+    type : [
+        {
+           institute: String,
+           degree : String,
+           startDate: String,
+           endDate : String,
+        }
+    ],
+    default:[]
   },
   summary: {
     type: String,
@@ -23,7 +34,8 @@ let resumeSchema = new mongoose.Schema<IResume>({
         location : String,
         github : String,
         portfolio : String
-    }
+    },
+    default: {}
   },
   workExperience: {
     type: [
@@ -59,3 +71,8 @@ let resumeSchema = new mongoose.Schema<IResume>({
 },{
     timestamps : true
 });
+
+
+const ResumeModel = mongoose.model('Resume', resumeSchema)
+
+export default ResumeModel
