@@ -5,7 +5,7 @@ import { ApiResponse } from "@/types/api.types"
 import { LoginBody } from "@/types/user.types"
 import { NextRequest, NextResponse } from "next/server"
 
-async function POST(req: NextRequest){
+export async function POST(req: NextRequest){
     try {
         await connectDB()
 
