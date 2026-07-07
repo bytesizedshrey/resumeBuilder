@@ -5,7 +5,7 @@ import { ApiResponse } from "@/types/api.types"
 import { RegisterBody } from "@/types/user.types"
 import { NextRequest, NextResponse } from "next/server"
 
-async function POST(req:NextRequest){
+export async function POST(req:NextRequest){
     try {
         await connectDB()
 
@@ -35,7 +35,7 @@ async function POST(req:NextRequest){
             name, email, password, mobile
         })
 
-        let token = generateToken({userId: newUser._id})
+        let token = generateToken({userId: newUser._id.toString()})
 
         let response = NextResponse.json<ApiResponse>({
             success : true, message : 'user registered sucessfully',data:{
@@ -58,8 +58,10 @@ async function POST(req:NextRequest){
 
     } catch (error) {
         console.log('error in register api',error)
-        return NextResponse.json({
-            success: false, message : 'Something went wrong', error
+        return NextResponse.json<ApiResponse>({
+            success: false, message : 'Something went wrong', error:{
+                error
+            }
         },{status: 500})
     }
-}
+} 
