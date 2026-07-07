@@ -1,5 +1,6 @@
 import { IUser } from "@/types/user.types";
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt'
 
 let userSchema = new mongoose.Schema<IUser >({
   name: {
@@ -30,7 +31,25 @@ let userSchema = new mongoose.Schema<IUser >({
     timestamps : true
 });
 
+//Before .save() actually stores the user in MongoDB, this function runs.
+/**
+ * pre = run before
+'save' = before a document is saved
+ */
+/**
+ * --------
+ *  this.isModified('password')
+     This checks:
+      "Has the password changed?"
+ --------------------------*/
+userSchema.pre('save',function():void{
+    if(!this.isModified('password'))return
+    this.password = bcrypt.hashSync(this.password,10)
+})
+//compare the password
+userSchema.methods.comparePass = function(candidatePassword:string):boolean{
+    return bcrypt.compareSync(candidatePassword,this.password)
+}
 
-let UserModel = mongoose.model('User', userSchema)
-
-export default UserModel
+const UserModel = mongoose.model('User', userSchema)
+export default UserModel  
