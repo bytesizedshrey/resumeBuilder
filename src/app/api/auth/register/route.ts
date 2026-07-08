@@ -9,9 +9,9 @@ export async function POST(req:NextRequest){
     try {
         await connectDB()
 
-        let body: RegisterBody = await req.json()
+        const body: RegisterBody = await req.json()
 
-        let {name,email,mobile,password} = body
+        const {name,email,mobile,password} = body
 
         if(!name || !email || !password){
             return NextResponse.json<ApiResponse>({
@@ -21,7 +21,7 @@ export async function POST(req:NextRequest){
             })
         }
         
-        let isExisted = await UserModel.findOne({email})
+        const isExisted = await UserModel.findOne({email})
 
         if(isExisted){
             return NextResponse.json<ApiResponse>({
@@ -31,13 +31,13 @@ export async function POST(req:NextRequest){
             })
         }
 
-        let newUser = await UserModel.create({
+        const newUser = await UserModel.create({
             name, email, password, mobile
         })
 
-        let token = generateToken({userId: newUser._id.toString()})
+        const token = generateToken({userId: newUser._id.toString()})
 
-        let response = NextResponse.json<ApiResponse>({
+        const response = NextResponse.json<ApiResponse>({
             success : true, message : 'user registered sucessfully',data:{
                 user:{
                     _id : newUser._id,

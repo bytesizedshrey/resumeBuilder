@@ -1,33 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import { ApiResponse } from "@/types/api.types";
+import { GenerateProjectDescriptionBody } from "@/types/ai.types";
 import { generateAiContent } from "@/lib/gemini";
 
-interface GenerateProjectDescriptionBody {
-  projectTitle: string;
-  projectType: string;
-  technologies: string[];
-}
 
 export async function POST(req: NextRequest) {
   try {
     const body: GenerateProjectDescriptionBody = await req.json();
 
-    const { projectTitle, projectType, technologies } = body;
+    const { projectTitle, projectType, techStack } = body;
 
     // Validation
     if (
       !projectTitle ||
       !projectType ||
-      !technologies ||
-      !Array.isArray(technologies) ||
-      technologies.length === 0
+      !techStack ||
+      !Array.isArray(techStack) ||
+      techStack.length === 0
     ) {
       return NextResponse.json<ApiResponse>(
         {
           success: false,
           message:
-            "Project title, project type and technologies are required.",
+            "Project title, project type and tech stack are required.",
         },
         {
           status: 400,
@@ -42,7 +37,7 @@ Generate a professional ATS-friendly resume project description.
 Project Details:
 - Project Title: ${projectTitle}
 - Project Type: ${projectType}
-- Technologies Used: ${technologies.join(", ")}
+- Technologies Used: ${techStack.join(", ")}
 
 Instructions:
 - Write a single paragraph between 80 and 120 words.

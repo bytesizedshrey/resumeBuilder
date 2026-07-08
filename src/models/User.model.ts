@@ -6,7 +6,7 @@ interface UserDocument extends Omit<IUser, '_id'>,Document{
     comparePass(candidatePassword:string):boolean
 }
 
-let userSchema = new mongoose.Schema<UserDocument>({
+const userSchema = new mongoose.Schema<UserDocument>({
   name: {
     type: String,
     trim: true,
