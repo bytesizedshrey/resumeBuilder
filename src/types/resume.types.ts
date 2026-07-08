@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 export interface IPersonalInfo{
     fullname : string;
     email : string;
@@ -36,14 +34,14 @@ export interface IEducation{
 
 export interface IResume{
     _id? :string;
-    user_id : Types.ObjectId;
+    user_id? : string;
     title : string;
     summary : string;
     personalInfo : IPersonalInfo;
     workExperience? : IWorkExperience[];
-    projects : IProjects[];
-    skills : string[];
-    education:IEducation[];
+    projects? : IProjects[];
+    skills? : string[];
+    education?:IEducation[];
     certifications?:string[];
     createdAt? : Date;
     updatedAt?: Date;
