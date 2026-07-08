@@ -21,3 +21,12 @@ export interface GenerateExperienceDescriptionBody {
     keyResponsibilities?: string;
     skills?: string[];
 }
+
+export interface ImproveContentBody{
+    content : string
+}
+
+export interface AtsScoreBody {
+    resumeText: string;
+    jobDescription: string;
+}
